@@ -1,105 +1,108 @@
-import React from "react";
-import styled from "styled-components";
-import category from "../images/category.png";
-import band from "../images/band.png";
-import art from "../images/art.png";
-import dance from "../images/dance.png";
-import etc from "../images/etc.png";
-import play from "../images/play.png";
-import sports from "../images/sports.png";
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+
+import Slide from '../components/Main/Slide';
+
+//img
 import logo from '../images/UNIVERSITY CONCERT.svg';
 import search from '../images/Search.svg';
 
-const Main = ({showWrapper}) => {
+import {useAuth} from '../contexts/AuthContext';
+
+const Main = (props) => {
+  const {
+    showWrapper,
+    selectedUniv,
+    setSelectedUniv,
+    setCategory,
+    searchKeyword,
+    setSearchKeyword,
+  } = props;
+
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (searchKeyword) {
+      navigate('/search');
+      setSearchKeyword('');
+    }
+  };
+
+  //추천 행사
+  const {BASE_URL} = useAuth();
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const [posts, setPosts] = useState([]);
+  const getPosts = () => {
+    axios
+      .get(`${BASE_URL}home/`)
+      .then((response) => {
+        setPosts(response.data.data);
+        console.log(response.data.data);
+      })
+      .catch((error) => {
+        console.error('추천 행사들을 불러오는 중 오류가 발생했습니다.', error);
+      });
+  };
+
   return (
-    <Wrapper>
-          <SelectBox>
-        <SelectButton>전체</SelectButton>
-        <SelectButton>서강대학교</SelectButton>
-        <SelectButton>연세대학교</SelectButton>
-        <SelectButton>이화여자대학교</SelectButton>
-        <SelectButton>홍익대학교</SelectButton>
-      </SelectBox>
-      <DetailBox>
-        <Advise>
-          <div className="caption">
-            <div className="caption1">무더운 여름</div>
-            <div className="caption2">시원한 밴드 공연 어떠세요?</div>
+    <>
+      <Wrapper>
+        <Background />
+        <Header>
+          <img src={logo}></img>
+          <div style={{marginTop: '12px'}}>
+            신촌 지역 대학교 동아리 공연을 한눈에 !
           </div>
-        </Advise>
-        <Category>
-          <div className="box band">
-            <div className="image-container">
-              <img src={band} alt="밴드" />
-            </div>
-            <span>밴드</span>
+          <div style={{marginTop: '22px'}}>
+            <button onClick={() => navigate('/write')}>
+              공연 등록하러 가기
+            </button>
+            <button onClick={() => navigate('/post')}>
+              공연 구경하러 가기
+            </button>
           </div>
-          <div className="box dance">
-            <div className="image-container">
-              <img src={dance} alt="댄스" />
-            </div>
-            <span>댄스</span>
-          </div>
-          <div className="box art">
-            <div className="image-container">
-              <img src={art} alt="전시" />
-            </div>
-            <span>전시</span>
-          </div>
-        </Category>
-        <Category>
-          <div className="box play">
-            <div className="image-container">
-              <img src={play} alt="연극" />
-            </div>
-            <span>연극</span>
-          </div>
-          <div className="box sports">
-            <div className="image-container">
-              <img src={sports} alt="스포츠" />
-            </div>
-            <span>스포츠</span>
-          </div>
-          <div className="box etc">
-            <div className="image-container">
-              <img src={etc} alt="기타" />
-            </div>
-            <span>기타</span>
-          </div>
-        </Category>
-      </DetailBox>
-      <Background />
-      <Header>
-        <img src={logo}></img>
-        <div style={{marginTop: '12px'}}>
-          신촌 지역 대학교 동아리 공연을 한눈에 !
-        </div>
-        <div style={{marginTop: '22px'}}>
-          <button>공연 등록하러 가기</button>
-          <button>공연 구경하러 가기</button>
-        </div>
-      </Header>
-      <Search>
-        <span>보고 싶은 공연이 있나요?</span>
-        <div>
-          <input placeholder='공연 이름 / 동아리 명' />
-          <img src={search} />
-        </div>
-      </Search>
-      <Today>
-        <span>오늘의 추천 공연</span>
-        <PosterContainer>
+        </Header>
+        <Search>
+          <span>보고 싶은 공연이 있나요?</span>
           <div>
-            <img></img>
-            <img></img>
-            <img></img>
-            <img></img>
+            <input
+              placeholder='공연 이름 / 동아리 명'
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+            />
+            <img onClick={handleSearch} src={search} />
           </div>
-        </PosterContainer>
-      </Today>
-    </Wrapper>
+        </Search>
+        <Today>
+          <span>오늘의 추천 공연</span>
+          <PosterContainer>
+            <div>
+              {posts &&
+                posts.map((post) => (
+                  <img
+                    key={post.event_id}
+                    src={post.img}
+                    onClick={() => navigate(`/post/${post.event_id}`)}
+                  ></img>
+                ))}
+            </div>
+          </PosterContainer>
+        </Today>
+      </Wrapper>
+      {showWrapper ? (
+        <Slide
+          selectedUniv={selectedUniv}
+          setSelectedUniv={setSelectedUniv}
+          setCategory={setCategory}
+        />
+      ) : null}
+    </>
   );
 };
 
@@ -114,90 +117,6 @@ const Wrapper = styled.div`
   align-items: center;
   background: #f2f2fd;
   position: relative;
-`;
-
-const SelectBox = styled.div`
-  width: 137px;
-  background-color: rgba(227, 227, 249, 0.81);
-  height: 774px;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-const SelectButton = styled.div`
-  width: 137px;
-  height: 62px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const DetailBox = styled.div`
-  position: absolute;
-  top: 0;
-  left: 137px;
-  background-color: white;
-  width: 253px;
-  height: 774px;
-`;
-
-const Advise = styled.div`
-  /* Rectangle 10 */
-  box-sizing: border-box;
-  margin: 18px auto 0px;
-  width: 202px;
-  height: 111px;
-  left: 26px;
-  top: 18px;
-  font-size: 12px;
-  background: url(.jpg), #d9d9d9;
-  border-radius: 20px;
-  padding-top: 65px;
-  background: url(${category});
-  background-size: cover;
-
-  .caption {
-    font-size: 12px;
-    font-weight: 600;
-    color: white;
-    margin: 0 18px 0;
-  }
-  .caption1 {
-    text-align: right;
-  }
-  .caption2 {
-    text-align: right;
-  }
-`;
-
-const Category = styled.div`
-  display: flex;
-  width: 200px;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 29px;
-  margin-bottom: 27px;
-  .box {
-    display: flex;
-    flex-direction: column;
-  }
-  .image-container {
-    width: 50px;
-    height: 51px;
-    background-color: #f4f4f4;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .image-container img {
-    display: block;
-    width: 30px;
-  }
-  span {
-    display: block;
-    margin-top: 8px;
-    text-align: center;
-    font-size: 14px;
   overflow: hidden;
 `;
 
