@@ -1,21 +1,21 @@
-import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
-import styled from 'styled-components';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import axios from "axios";
 
 //img
-import people from '../images/people.svg';
-import calendar from '../images/calendar.svg';
-import location from '../images/location.svg';
-import time from '../images/time.svg';
-import money from '../images/money.svg';
-import phone from '../images/phone.svg';
+import people from "../images/people.svg";
+import calendar from "../images/calendar.svg";
+import location from "../images/location.svg";
+import time from "../images/time.svg";
+import money from "../images/money.svg";
+import phone from "../images/phone.svg";
 
-import {useAuth} from '../contexts/AuthContext';
+import { useAuth } from "../contexts/AuthContext";
 
 const DetailPost = () => {
-  const {BASE_URL} = useAuth();
-  const {event_id} = useParams();
+  const { BASE_URL } = useAuth();
+  const { event_id } = useParams();
 
   useEffect(() => {
     getPosts();
@@ -30,7 +30,7 @@ const DetailPost = () => {
         console.log(response.data.data);
       })
       .catch((error) => {
-        console.error('상세정보를 불러오는 중 오류가 발생했습니다.', error);
+        console.error("상세정보를 불러오는 중 오류가 발생했습니다.", error);
       });
   };
 
@@ -48,11 +48,13 @@ const DetailPost = () => {
 
         <Poster>
           {/* <White1 /> */}
-          <ImgContainer>
-            <img />
-            <img />
-            <img />
-          </ImgContainer>
+          <ScrollContainer>
+            <ImgContainer>
+              <img />
+              <img />
+              <img />
+            </ImgContainer>
+          </ScrollContainer>
           {/* <White2 /> */}
         </Poster>
         <Hr />
@@ -96,6 +98,8 @@ const DetailPost = () => {
 };
 
 export default DetailPost;
+
+const ScrollContainer = styled.div``;
 
 const Wrapper = styled.div`
   width: 390px;
@@ -184,8 +188,8 @@ const Poster = styled.div`
   margin-bottom: 24px;
   display: flex;
   flex-direction: row;
-
   overflow: hidden;
+  position: relative;
 `;
 
 const ImgContainer = styled.div`
@@ -193,7 +197,9 @@ const ImgContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 8px;
-
+  position: absolute;
+  top: 3px;
+  left: -180px;
   img {
     width: 233px;
     height: 311px;

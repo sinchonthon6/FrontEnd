@@ -1,25 +1,25 @@
-import {useState} from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import './App.css';
+import { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
 
-import Main from './pages/Main';
-import ShowPost from './pages/ShowPost';
-import WritePost from './pages/WritePost';
-import SearchPost from './pages/SearchPost';
-import Nav from './components/Nav';
-import DetailPost from './pages/DetailPost';
-import Login from './pages/Login';
-import Auth from './pages/Auth';
+import Main from "./pages/Main";
+import ShowPost from "./pages/ShowPost";
+import WritePost from "./pages/WritePost";
+import SearchPost from "./pages/SearchPost";
+import Nav from "./components/Nav";
+import DetailPost from "./pages/DetailPost";
+import Login from "./pages/Login";
+import Auth from "./pages/Auth";
 
 //context
-import {AuthProvider} from './contexts/AuthContext';
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   const [showWrapper, setShowWrapper] = useState(false);
 
   //조회 관리
-  const [selectedUniv, setSelectedUniv] = useState('all');
-  const [category, setCategory] = useState('all');
+  const [selectedUniv, setSelectedUniv] = useState("all");
+  const [category, setCategory] = useState("all");
 
   //검색 관리
   const [searchKeyword, setSearchKeyword] = useState();
@@ -30,7 +30,7 @@ function App() {
         <Nav showWrapper={showWrapper} setShowWrapper={setShowWrapper} />
         <Routes>
           <Route
-            path='/'
+            path="/"
             element={
               <Main
                 showWrapper={showWrapper}
@@ -42,9 +42,9 @@ function App() {
               ></Main>
             }
           ></Route>
-          <Route path='/write' element={<WritePost></WritePost>}></Route>
+          <Route path="/write" element={<WritePost></WritePost>}></Route>
           <Route
-            path='/post/'
+            path="/post/"
             element={
               <ShowPost
                 selectedUniv={selectedUniv}
@@ -53,13 +53,15 @@ function App() {
             }
           ></Route>
           <Route
-            path='/post/:postID'
+            path="/post/:postID"
             element={<DetailPost></DetailPost>}
           ></Route>
           <Route
-            path='/search'
+            path="/search"
             element={<SearchPost searchKeyword={searchKeyword}></SearchPost>}
           ></Route>
+          <Route path="/Login" element={<Login></Login>}></Route>
+          <Route path="/auth" element={<Auth></Auth>}></Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
