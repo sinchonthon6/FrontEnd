@@ -8,6 +8,7 @@ import search from '../images/Search.svg';
 const Main = () => {
   return (
     <Wrapper>
+      <Background />
       <Header>
         <img src={logo}></img>
         <div style={{marginTop: '12px'}}>
@@ -49,17 +50,23 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+`;
+
+const Background = styled.div`
+  position: absolute;
+  width: 390px;
+  height: 458px;
   background: var(
     --background,
     linear-gradient(
-      176deg,
+      225deg,
       rgba(167, 41, 227, 0.2) 0%,
       rgba(38, 35, 224, 0.18) 41.15%,
       rgba(229, 176, 96, 0.12) 62.5%,
       rgba(94, 91, 225, 0.07) 100%
     )
   );
-  overflow: hidden;
 `;
 
 const Header = styled.div`
@@ -68,26 +75,32 @@ const Header = styled.div`
   flex-direction: column;
   align-items: center;
 
-  font-size: 12px;
-  font-weight: 400;
-
   div {
     display: flex;
     flex-direction: row;
     gap: 20px;
+
+    font-size: 12px;
+    font-weight: 400;
   }
 
   div > button {
+    z-index: 1;
     width: 129px;
     height: 39px;
     border-radius: 20px;
     background: #fff;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     border: none;
+    cursor: pointer;
+
+    font-size: 12px;
+    font-weight: 400;
   }
 `;
 
 const Search = styled.div`
+  z-index: 1;
   margin-top: 40px;
   width: 341px;
   height: 120px;
@@ -127,10 +140,12 @@ const Search = styled.div`
   img {
     width: 22.647px;
     height: 22px;
+    cursor: pointer;
   }
 `;
 
 const Today = styled.div`
+  z-index: 1;
   margin-top: 25px;
   width: 390px;
   height: 387px;
@@ -141,6 +156,8 @@ const Today = styled.div`
   display: flex;
   flex-direction: column;
   background: #fff;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
 
   span {
     margin-left: 0;
@@ -155,6 +172,10 @@ const PosterContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   div {
     display: flex;
