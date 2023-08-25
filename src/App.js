@@ -15,7 +15,6 @@ function App() {
           <Route path='/' element={<Main></Main>}></Route>
           <Route path='/Write' element={<WritePost></WritePost>}></Route>
           <Route path='/post/:postID' element={<ShowPost></ShowPost>}></Route>
-
           <Route path='/search' element={<SearchPost></SearchPost>}></Route>
         </Routes>
       </BrowserRouter>
