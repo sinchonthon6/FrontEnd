@@ -1,17 +1,58 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+
 import DatePicker from 'react-datepicker';
 import {registerLocale} from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import en from 'date-fns/locale/en-US';
+
 import Post from '../components/ShowPost/Post';
 
 
+import {useAuth} from '../contexts/AuthContext';
+
 registerLocale('en', en); // 영어 설정 등록
 
-const ShowPost = () => {
-  const [startDate, setStartDate] = useState(new Date());
+const ShowPost = ({selectedUniv, category}) => {
+  const {BASE_URL} = useAuth();
+
+  //기간 설정
+  const [startDate, setStartDate] = useState(new Date()); //null로 해야 하나?
   const [endDate, setEndDate] = useState(new Date());
+
+  // const formatDate = (date) => {
+  //   if (!date) return '';
+  //   const year = date.getFullYear();
+  //   const month = String(date.getMonth() + 1).padStart(2, '0');
+  //   const day = String(date.getDate()).padStart(2, '0');
+  //   return `${year}-${month}-${day}`;
+  // };
+
+  // {formatDate(startDate)}
+
+  //Get: 조회 결과
+  const [posts, setPosts] = useState([]);
+  const getResult = () => {
+    axios
+      .get(`${BASE_URL}home/lists/`, {
+        school: selectedUniv,
+        category: category,
+        start: startDate,
+        finish: endDate,
+      })
+      .then((response) => {
+        setPosts(response.data);
+        console.log(response.data.data);
+      })
+      .catch((error) => {
+        console.error('조회 결과를 불러오는 중 오류가 발생했습니다.', error);
+      });
+  };
+
+  useEffect(() => {
+    getResult();
+  }, []);
 
   return (
     <Wrapper>
@@ -35,7 +76,9 @@ const ShowPost = () => {
         </BtnContainer>
       </DateContainer>
       <List>
-        <Post></Post>
+        {posts.map((post, index) => (
+          <Post key={index} post={post} />
+        ))}
       </List>
     </Wrapper>
   );

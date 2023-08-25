@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Post = () => {
+const Post = ({post}) => {
   return (
     <Wrapper>
       <Poster />
       <TextContainer>
-        <Title>[Mel5dy] 9월 공연 보러오세요~🎵</Title>
+        <Title>[Mel5dy] {post.title}</Title>
         <div>
           <Author>Mel5dy</Author>
           <Period>2023.08.25~2023.08.27</Period>

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 //img
 import people from '../images/people.svg';
@@ -9,7 +11,29 @@ import time from '../images/time.svg';
 import money from '../images/money.svg';
 import phone from '../images/phone.svg';
 
+import {useAuth} from '../contexts/AuthContext';
+
 const DetailPost = () => {
+  const {BASE_URL} = useAuth();
+  const {event_id} = useParams();
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const [posts, setPosts] = useState([]);
+  const getPosts = () => {
+    axios
+      .get(`${BASE_URL}details/${event_id}`)
+      .then((response) => {
+        setPosts(response.data.data);
+        console.log(response.data.data);
+      })
+      .catch((error) => {
+        console.error('상세정보를 불러오는 중 오류가 발생했습니다.', error);
+      });
+  };
+
   return (
     <Wrapper>
       <Background />
