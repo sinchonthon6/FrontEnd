@@ -1,10 +1,9 @@
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import ShowPost from "./pages/ShowPost";
 import WritePost from "./pages/WritePost";
 import Login from "./pages/Login";
-
+import Nav from "./components/Nav";
 function App() {
   return (
     <>
