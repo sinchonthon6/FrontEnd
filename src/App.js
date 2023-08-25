@@ -5,6 +5,7 @@ import WritePost from './pages/WritePost';
 import SearchPost from './pages/SearchPost';
 import Nav from './components/Nav';
 import './App.css';
+import DetailPost from './pages/DetailPost';
 
 function App() {
   return (
@@ -14,8 +15,11 @@ function App() {
         <Routes>
           <Route path='/' element={<Main></Main>}></Route>
           <Route path='/Write' element={<WritePost></WritePost>}></Route>
-          <Route path='/post/:postID' element={<ShowPost></ShowPost>}></Route>
-
+          <Route path='/post/' element={<ShowPost></ShowPost>}></Route>
+          <Route
+            path='/post/:postID'
+            element={<DetailPost></DetailPost>}
+          ></Route>
           <Route path='/search' element={<SearchPost></SearchPost>}></Route>
         </Routes>
       </BrowserRouter>
