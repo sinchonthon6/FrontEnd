@@ -32,33 +32,33 @@ const Slide = (props) => {
             전체
           </SelectButton>
           <SelectButton
-            selected={selectedUniv === '서강대학교'}
+            selected={selectedUniv === '서강대'}
             onClick={() => {
-              selectUniv('서강대학교');
+              selectUniv('서강대');
             }}
           >
             서강대학교
           </SelectButton>
           <SelectButton
-            selected={selectedUniv === '연세대학교'}
+            selected={selectedUniv === '연세대'}
             onClick={() => {
-              selectUniv('연세대학교');
+              selectUniv('연세대');
             }}
           >
             연세대학교
           </SelectButton>
           <SelectButton
-            selected={selectedUniv === '이화여자대학교'}
+            selected={selectedUniv === '이화여대'}
             onClick={() => {
-              selectUniv('이화여자대학교');
+              selectUniv('이화여대');
             }}
           >
             이화여자대학교
           </SelectButton>
           <SelectButton
-            selected={selectedUniv === '홍익대학교'}
+            selected={selectedUniv === '홍익대'}
             onClick={() => {
-              selectUniv('홍익대학교');
+              selectUniv('홍익대');
             }}
           >
             홍익대학교

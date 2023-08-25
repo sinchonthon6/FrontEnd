@@ -1,12 +1,15 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext} from 'react';
 
 const AuthContext = createContext();
 
 export function AuthProvider({children}) {
+  const authToken = 'null';
   const BASE_URL = 'http://3.39.93.174:8000/';
 
   return (
-    <AuthContext.Provider value={{BASE_URL}}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{BASE_URL, authToken}}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 

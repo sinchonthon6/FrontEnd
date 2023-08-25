@@ -9,7 +9,6 @@ import en from 'date-fns/locale/en-US';
 
 import Post from '../components/ShowPost/Post';
 
-
 import {useAuth} from '../contexts/AuthContext';
 
 registerLocale('en', en); // 영어 설정 등록
@@ -19,30 +18,31 @@ const ShowPost = ({selectedUniv, category}) => {
 
   //기간 설정
   const [startDate, setStartDate] = useState(new Date()); //null로 해야 하나?
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date(2023, 10, 31));
 
-  // const formatDate = (date) => {
-  //   if (!date) return '';
-  //   const year = date.getFullYear();
-  //   const month = String(date.getMonth() + 1).padStart(2, '0');
-  //   const day = String(date.getDate()).padStart(2, '0');
-  //   return `${year}-${month}-${day}`;
-  // };
-
-  // {formatDate(startDate)}
+  const formatDate = (date) => {
+    if (!date) return '';
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
   //Get: 조회 결과
   const [posts, setPosts] = useState([]);
+  // const [render, setRender] = useState(1);
   const getResult = () => {
     axios
-      .get(`${BASE_URL}home/lists/`, {
-        school: selectedUniv,
-        category: category,
-        start: startDate,
-        finish: endDate,
+      .get(`${BASE_URL}homes/lists/`, {
+        params: {
+          school: selectedUniv,
+          category: category,
+          start: formatDate(startDate),
+          finish: formatDate(endDate),
+        },
       })
       .then((response) => {
-        setPosts(response.data);
+        setPosts(response.data.data);
         console.log(response.data.data);
       })
       .catch((error) => {
@@ -76,9 +76,8 @@ const ShowPost = ({selectedUniv, category}) => {
         </BtnContainer>
       </DateContainer>
       <List>
-        {posts.map((post, index) => (
-          <Post key={index} post={post} />
-        ))}
+        {posts.length !== 0 &&
+          posts.map((post, index) => <Post key={index} post={post} />)}
       </List>
     </Wrapper>
   );
@@ -88,7 +87,7 @@ export default ShowPost;
 
 const Wrapper = styled.div`
   width: 390px;
-  height: 774px;
+  min-height: 774px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -136,7 +135,7 @@ const SetDateBtn = styled(DatePicker)`
 const List = styled.div`
   margin-top: 18px;
   width: 351px;
-  height: 570px; //나중에 100%로 변경하기
+  height: 100%;
   padding: 19px 14px;
   box-sizing: border-box;
   display: flex;
