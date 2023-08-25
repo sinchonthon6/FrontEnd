@@ -1,19 +1,29 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 
+import {useAuth} from '../../contexts/AuthContext';
+
 const Post = ({post}) => {
+  const navigate = useNavigate();
+  const {BASE_URL} = useAuth();
+
   return (
-    <Wrapper>
-      <Poster />
+    <Wrapper onClick={() => navigate(`/post/${post.id}`)}>
+      <Poster src={`${BASE_URL}${post.img}`} />
       <TextContainer>
-        <Title>[Mel5dy] {post.title}</Title>
+        <Title>
+          [{post.circle_name}] {post.title}
+        </Title>
         <div>
-          <Author>Mel5dy</Author>
-          <Period>2023.08.25~2023.08.27</Period>
+          <Author>{post.circle_name}</Author>
+          <Period>
+            {post.start_day}~{post.finish_day}
+          </Period>
         </div>
         <HashTag>
           {/* 데이터 받아서 map으로 돌리기 */}
-          <div>#홍익대</div>
+          <div>#{post.school}</div>
         </HashTag>
       </TextContainer>
     </Wrapper>
@@ -79,6 +89,7 @@ const Period = styled.div`
   text-align: right;
   font-size: 10px;
   font-weight: 400;
+  white-space: nowrap;
 `;
 
 const HashTag = styled.div`

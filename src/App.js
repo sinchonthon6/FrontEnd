@@ -53,13 +53,14 @@ function App() {
             }
           ></Route>
           <Route
-            path='/post/:postID'
+            path='/post/:eventId'
             element={<DetailPost></DetailPost>}
           ></Route>
           <Route
             path='/search'
             element={<SearchPost searchKeyword={searchKeyword}></SearchPost>}
           ></Route>
+          <Route path='/Login' element={<Login></Login>}></Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
