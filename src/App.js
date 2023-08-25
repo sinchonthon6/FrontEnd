@@ -6,11 +6,15 @@ import SearchPost from './pages/SearchPost';
 import Nav from './components/Nav';
 import './App.css';
 import DetailPost from './pages/DetailPost';
+import Login from "./pages/Login";
+import Auth from "./pages/Auth";
+import { useState } from "react";
 
 function App() {
+  const [showWrapper, setShowWrapper] = useState(false);
   return (
     <>
-      <Nav />
+      <Nav setShowWrapper={setShowWrapper} />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Main></Main>}></Route>
