@@ -1,14 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 //img
-import menu from '../images/Menu.svg';
-import person from '../images/person.svg';
+import menu from "../images/Menu.svg";
+import person from "../images/person.svg";
 
-const Nav = () => {
+const Nav = ({ setShowWrapper }) => {
   return (
     <Wrapper>
-      <Menu src={menu}></Menu>
+      <Menu src={menu} onClick={setShowWrapper}></Menu>
       <span>유니콘</span>
       <Person src={person}></Person>
     </Wrapper>
