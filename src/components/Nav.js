@@ -1,16 +1,29 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 //img
-import menu from "../images/Menu.svg";
-import person from "../images/person.svg";
+import menu from '../images/Menu.svg';
+import logo from '../images/LOGO.svg';
+import person from '../images/person.svg';
 
-const Nav = ({ setShowWrapper }) => {
+const Nav = ({showWrapper, setShowWrapper}) => {
   return (
     <Wrapper>
-      <Menu src={menu} onClick={setShowWrapper}></Menu>
-      <span>유니콘</span>
-      <Person src={person}></Person>
+      <Menu
+        src={menu}
+        onClick={() => {
+          setShowWrapper(!showWrapper);
+        }}
+      ></Menu>
+
+      <Link to='/'>
+        <Logo src={logo} />
+      </Link>
+
+      <Link to='/Login'>
+        <Person src={person} />
+      </Link>
     </Wrapper>
   );
 };
@@ -37,9 +50,14 @@ const Menu = styled.img`
   cursor: pointer;
 `;
 
+const Logo = styled.img`
+  width: 138px;
+  height: 48px;
+  cursor: pointer;
+`;
+
 const Person = styled.img`
   width: 37px;
   height: 37px;
-  margin-right: 30px;
   cursor: pointer;
 `;
