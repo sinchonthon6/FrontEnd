@@ -9,6 +9,7 @@ import en from 'date-fns/locale/en-US';
 
 import Post from '../components/ShowPost/Post';
 
+
 import {useAuth} from '../contexts/AuthContext';
 
 registerLocale('en', en); // 영어 설정 등록
