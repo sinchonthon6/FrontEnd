@@ -1,10 +1,15 @@
-import React from "react";
-import { styled } from "styled-components";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import down from "../images/down.svg";
+
+import React from 'react';
+import {styled} from 'styled-components';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import down from '../images/down.svg';
 import axios from "axios";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { useAuth } from "../contexts/AuthContext";
+
+
 function WritePost() {
   const { BASE_URL } = useAuth();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -14,28 +19,23 @@ function WritePost() {
   };
   const navigate = useNavigate();
   const SubmitGoHome = async () => {
-    navigate("/");
-    await axios.post(`${BASE_URL}/event/`, {
-      circle_name: 동아리,
-      title: 제목,
-      university: 학교,
-      main_img: selectedImage,
-    });
+    navigate('/');
+
   };
   const [visible, setVisible] = useState(false);
   const [form, setForm] = useState({
-    제목: "",
-    동아리: "",
-    학교: "",
-    카테고리: "",
-    시작일: "",
-    종료일: "",
-    시작시간: "",
-    소요시간: "",
-    요금: "",
-    공연장소: "",
-    연락처: "",
-    설명: "",
+    제목: '',
+    동아리: '',
+    학교: '',
+    카테고리: '',
+    // 시작일: '',
+    // 종료일: '',
+    시작시간: '',
+    소요시간: '',
+    요금: '',
+    공연장소: '',
+    연락처: '',
+    설명: '',
   });
 
   const {
@@ -43,8 +43,8 @@ function WritePost() {
     동아리,
     학교,
     카테고리,
-    시작일,
-    종료일,
+    // 시작일,
+    // 종료일,
     시작시간,
     소요시간,
     요금,
@@ -53,136 +53,146 @@ function WritePost() {
     설명,
   } = form;
   const onChange = (e) => {
-    const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setForm({
       ...form, // 기존의 input 객체를 복사한 뒤
       [name]: value, // name 키를 가진 값을 value 로 설정
     });
   };
 
+  const [startDate, setStartDate] = useState(new Date()); //null로 해야 하나?
+  const [endDate, setEndDate] = useState(new Date());
+
   return (
     <WriteContainer>
       <h1>POST</h1>
       <InputForm>
         <input
-          name="제목"
+          name='제목'
           value={제목}
-          className="normal"
-          placeholder="제목은 15자 이내로 작성"
+          className='normal'
+          placeholder='제목은 15자 이내로 작성'
           onChange={onChange}
         ></input>
         <input
-          name="동아리"
+          name='동아리'
           value={동아리}
-          className="normal"
-          placeholder="동아리명"
+          className='normal'
+          placeholder='동아리명'
           onChange={onChange}
         ></input>
         <input
-          name="학교"
+          name='학교'
           value={학교}
-          className="normal"
-          placeholder="학교명"
+          className='normal'
+          placeholder='학교명'
           onChange={onChange}
         ></input>
-        <div className="dropdown">
+        <div className='dropdown'>
           <input
-            name="카테고리"
+            name='카테고리'
             value={카테고리}
-            className="normal"
-            placeholder="카테고리 선택"
+            className='normal'
+            placeholder='카테고리 선택'
             onChange={onChange}
           ></input>
           <img
             src={down}
-            alt="드롭다운"
+            alt='드롭다운'
             onClick={() => {
               setVisible(!visible);
             }}
           />
 
           {visible ? (
-            <ul className="hide-menu">
+            <ul className='hide-menu'>
               <li
                 onClick={() => {
-                  setForm({ ...form, category: "서강대학교" });
-                  const El = document.querySelector("input.normal");
+                  setForm({...form, category: '서강대학교'});
+                  const El = document.querySelector('input.normal');
                   console.log(El);
-                  El.value = "서강대학교";
+                  El.value = '서강대학교';
                   setVisible(!visible);
                 }}
               >
                 밴드
               </li>
+
               <li>댄스</li>
               <li>전시</li>
               <li>연극</li>
               <li>스포츠</li>
               <li>기타</li>
+
             </ul>
           ) : (
-            ""
+            ''
           )}
-          <div className="hide-menu"></div>
+          <div className='hide-menu'></div>
         </div>
 
-        <div className="flex">
-          <input
-            name="시작일"
-            value={시작일}
-            className="half"
-            placeholder="시작일"
-            onChange={onChange}
+        <div className='flex'>
+          <DatePicker
+            // name='시작일'
+            // value={시작일}
+            className='half'
+            placeholder='시작일'
+            dateFormat='yy-MM-dd'
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
           />
           <p>~</p>
-          <input
-            name="종료일"
-            value={종료일}
-            className="half"
-            placeholder="종료일"
-            onChange={onChange}
+          <DatePicker
+            // name='종료일'
+            // value={종료일}
+            className='half'
+            placeholder='종료일'
+            dateFormat='yy-MM-dd'
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            minDate={startDate}
           />
         </div>
         <input
-          name="시작시간"
+          name='시작시간'
           value={시작시간}
-          className="normal"
-          placeholder="시작 시간(ex. 18:30)"
+          className='normal'
+          placeholder='시작 시간(ex. 18:30)'
           onChange={onChange}
         ></input>
         <input
-          name="소요시간"
+          name='소요시간'
           value={소요시간}
-          className="normal"
-          placeholder="소요 시간 (ex.90분)"
+          className='normal'
+          placeholder='소요 시간 (ex.90분)'
           onChange={onChange}
         ></input>
         <input
-          name="요금"
+          name='요금'
           value={요금}
           onChange={onChange}
-          className="normal"
-          placeholder="요금(ex. 무료 / 9000원)"
+          className='normal'
+          placeholder='요금(ex. 무료 / 9000원)'
         ></input>
         <input
-          name="공연장소"
+          name='공연장소'
           value={공연장소}
-          className="normal"
-          placeholder="공연 장소 (상세 주소까지 입력)"
+          className='normal'
+          placeholder='공연 장소 (상세 주소까지 입력)'
           onChange={onChange}
         ></input>
         <input
-          name="연락처"
+          name='연락처'
           value={연락처}
-          className="normal"
-          placeholder="연락처 (전화번호 or 인스타)"
+          className='normal'
+          placeholder='연락처 (전화번호 or 인스타)'
           onChange={onChange}
         ></input>
         <textarea
-          name="설명"
+          name='설명'
           value={설명}
-          className="large"
-          placeholder="상세설명 (자유롭게 홍보해주세요~)"
+          className='large'
+          placeholder='상세설명 (자유롭게 홍보해주세요~)'
           onChange={onChange}
         ></textarea>
         <ImageSubmit>

@@ -1,4 +1,3 @@
-
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
@@ -41,7 +40,7 @@ const Main = (props) => {
   const [posts, setPosts] = useState([]);
   const getPosts = () => {
     axios
-      .get(`${BASE_URL}home/`)
+      .get(`${BASE_URL}homes/`)
       .then((response) => {
         setPosts(response.data.data);
         console.log(response.data.data);
@@ -87,9 +86,9 @@ const Main = (props) => {
               {posts &&
                 posts.map((post) => (
                   <img
-                    key={post.event_id}
-                    src={post.img}
-                    onClick={() => navigate(`/post/${post.event_id}`)}
+                    key={post.id}
+                    src={`${BASE_URL}${post.img}`}
+                    onClick={() => navigate(`/post/${post.id}`)}
                   ></img>
                 ))}
             </div>
@@ -256,6 +255,5 @@ const PosterContainer = styled.div`
     width: 200px;
     height: 200px;
     border-radius: 30px;
-    background: url(<path-to-image>), lightgray 50% / cover no-repeat;
   }
 `;

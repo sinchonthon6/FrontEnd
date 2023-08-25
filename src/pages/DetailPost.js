@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import axios from "axios";
+
+import React, {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
+import styled from 'styled-components';
+import axios from 'axios';
+
 
 //img
 import people from "../images/people.svg";
@@ -14,19 +17,27 @@ import phone from "../images/phone.svg";
 import { useAuth } from "../contexts/AuthContext";
 
 const DetailPost = () => {
-  const { BASE_URL } = useAuth();
-  const { event_id } = useParams();
+
+  const {authToken, BASE_URL} = useAuth();
+  const {eventId} = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPosts();
   }, []);
 
   const [posts, setPosts] = useState([]);
+  const [dday, setDday] = useState('');
   const getPosts = () => {
     axios
-      .get(`${BASE_URL}details/${event_id}`)
+      .get(`${BASE_URL}details/${eventId}`, {
+        // headers: {
+        //   Authorization: `Bearer ${authToken}`,
+        // },
+      })
       .then((response) => {
         setPosts(response.data.data);
+        setDday(response.data.dday);
         console.log(response.data.data);
       })
       .catch((error) => {
@@ -39,60 +50,67 @@ const DetailPost = () => {
       <Background />
       <Detail>DETAIL</Detail>
       <PostBox>
-        <Day>D-3</Day>
-        <Title>[Mel5dy] 9월 공연 보러오세요~🎵</Title>
+        <Day>D-{dday}</Day>
+        <Title>
+          [{posts.circle_name}] {posts.title}
+        </Title>
         <HashTag>
-          {/* 데이터 받아서 map으로 돌리기 */}
-          <div>#홍익대</div>
+          <div>#{posts.school}</div>
+          <div>#{posts.category}</div>
         </HashTag>
 
         <Poster>
-          {/* <White1 /> */}
-          <ScrollContainer>
-            <ImgContainer>
-              <img />
-              <img />
-              <img />
-            </ImgContainer>
-          </ScrollContainer>
-          {/* <White2 /> */}
+
+          <ImgContainer>
+            <div>
+              <img src={`${BASE_URL}${posts.img}`} />
+              {posts.img_detail_1 && (
+                <img src={`${BASE_URL}${posts.img_detail_1}`} />
+              )}
+              {posts.img_detail_2 && (
+                <img src={`${BASE_URL}${posts.img_detail_2}`} />
+              )}
+            </div>
+          </ImgContainer>
         </Poster>
         <Hr />
 
         <InfoContainer>
           <div>
             <img src={people} />
-            <span>Mel5dy</span>
+            <span>{posts.circle_name}</span>
           </div>
           <div>
             <img src={calendar} />
-            <span>Mel5dy</span>
+            <span>
+              {posts.start_day} ~ {posts.finish_day}
+            </span>
           </div>
-          <div>
-            <img src={location} />
-            <span>Mel5dy</span>
-          </div>
+          {posts.locate && (
+            <div>
+              <img src={location} />
+              <span>{posts.locate}</span>
+            </div>
+          )}
           <div>
             <img src={time} />
-            <span>Mel5dy</span>
+            <span>{posts.long}</span>
           </div>
           <div>
             <img src={money} />
-            <span>5,000원</span>
+            <span>{posts.pay}원</span>
           </div>
           <div>
             <img src={phone} />
-            <span>010-1234-5678 / @mel5dy</span>
+            <span>{posts.contact}</span>
           </div>
         </InfoContainer>
         <Hr />
 
-        <TextContainer>
-          신청은 아래 구글폼 링크로 받고 있습니다! 많이많이 보러 와주세요
-          ~~~~~~~~~~~~~~ [구글 폼 링크]
-        </TextContainer>
+        <TextContainer>{posts.detail}</TextContainer>
       </PostBox>
-      <ListBox>목록</ListBox>
+      {/* <ListBox>수정</ListBox> */}
+      <ListBox onClick={() => navigate('/post')}>목록</ListBox>
     </Wrapper>
   );
 };
@@ -169,6 +187,9 @@ const Day = styled.div`
 
 const Title = styled.div`
   margin-top: 19px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
   font-size: 16px;
   font-weight: 800;
 `;
@@ -176,6 +197,9 @@ const Title = styled.div`
 const HashTag = styled.div`
   margin-top: 15px;
   margin-bottom: 12.7px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
   color: #6c6ade;
   font-size: 13px;
   font-weight: 400;
@@ -194,12 +218,24 @@ const Poster = styled.div`
 
 const ImgContainer = styled.div`
   z-index: 2;
+  overflow-x: scroll;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 8px;
-  position: absolute;
-  top: 3px;
-  left: -180px;
+
+  align-items: flex-start;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  div {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
   img {
     width: 233px;
     height: 311px;

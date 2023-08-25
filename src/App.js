@@ -53,7 +53,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/post/:postID"
+            path='/post/:eventId'
             element={<DetailPost></DetailPost>}
           ></Route>
           <Route
@@ -62,6 +62,7 @@ function App() {
           ></Route>
           <Route path="/Login" element={<Login></Login>}></Route>
           <Route path="/auth" element={<Auth></Auth>}></Route>
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>
