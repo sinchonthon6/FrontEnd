@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 //img
-import menu from '../images/Menu.svg';
-import logo from '../images/LOGO.svg';
-import person from '../images/person.svg';
+import menu from "../images/Menu.svg";
+import logo from "../images/LOGO.svg";
+import person from "../images/person.svg";
 
-const Nav = ({showWrapper, setShowWrapper}) => {
+const Nav = ({ showWrapper, setShowWrapper }) => {
   return (
     <Wrapper>
       <Menu
@@ -17,11 +17,11 @@ const Nav = ({showWrapper, setShowWrapper}) => {
         }}
       ></Menu>
 
-      <Link to='/'>
+      <Link to="/">
         <Logo src={logo} />
       </Link>
 
-      <Link to='/Login'>
+      <Link to="/Login">
         <Person src={person} />
       </Link>
     </Wrapper>

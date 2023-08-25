@@ -1,20 +1,23 @@
+
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-//img
-import people from '../images/people.svg';
-import calendar from '../images/calendar.svg';
-import location from '../images/location.svg';
-import time from '../images/time.svg';
-import money from '../images/money.svg';
-import phone from '../images/phone.svg';
 
-import {useAuth} from '../contexts/AuthContext';
+//img
+import people from "../images/people.svg";
+import calendar from "../images/calendar.svg";
+import location from "../images/location.svg";
+import time from "../images/time.svg";
+import money from "../images/money.svg";
+import phone from "../images/phone.svg";
+
+import { useAuth } from "../contexts/AuthContext";
 
 const DetailPost = () => {
+
   const {authToken, BASE_URL} = useAuth();
   const {eventId} = useParams();
   const navigate = useNavigate();
@@ -38,7 +41,7 @@ const DetailPost = () => {
         console.log(response.data.data);
       })
       .catch((error) => {
-        console.error('상세정보를 불러오는 중 오류가 발생했습니다.', error);
+        console.error("상세정보를 불러오는 중 오류가 발생했습니다.", error);
       });
   };
 
@@ -57,6 +60,7 @@ const DetailPost = () => {
         </HashTag>
 
         <Poster>
+
           <ImgContainer>
             <div>
               <img src={`${BASE_URL}${posts.img}`} />
@@ -112,6 +116,8 @@ const DetailPost = () => {
 };
 
 export default DetailPost;
+
+const ScrollContainer = styled.div``;
 
 const Wrapper = styled.div`
   width: 390px;
@@ -206,8 +212,8 @@ const Poster = styled.div`
   margin-bottom: 24px;
   display: flex;
   flex-direction: row;
-
   overflow: hidden;
+  position: relative;
 `;
 
 const ImgContainer = styled.div`
@@ -216,6 +222,7 @@ const ImgContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+
   align-items: flex-start;
 
   &::-webkit-scrollbar {

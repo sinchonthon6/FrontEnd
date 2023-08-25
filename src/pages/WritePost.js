@@ -1,16 +1,26 @@
+
 import React from 'react';
 import {styled} from 'styled-components';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import down from '../images/down.svg';
-
+import axios from "axios";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useAuth } from "../contexts/AuthContext";
+
 
 function WritePost() {
+  const { BASE_URL } = useAuth();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const handleImageChange = (e) => {
+    const imageFile = e.target.files[0];
+    setSelectedImage(imageFile);
+  };
   const navigate = useNavigate();
   const SubmitGoHome = async () => {
     navigate('/');
+
   };
   const [visible, setVisible] = useState(false);
   const [form, setForm] = useState({
@@ -105,11 +115,15 @@ function WritePost() {
                   setVisible(!visible);
                 }}
               >
-                서강대학교
+                밴드
               </li>
-              <li>연세대학교</li>
-              <li>이화여자대학교</li>
-              <li style={{borderBottom: 'none'}}>홍익대학교</li>
+
+              <li>댄스</li>
+              <li>전시</li>
+              <li>연극</li>
+              <li>스포츠</li>
+              <li>기타</li>
+
             </ul>
           ) : (
             ''
@@ -181,14 +195,36 @@ function WritePost() {
           placeholder='상세설명 (자유롭게 홍보해주세요~)'
           onChange={onChange}
         ></textarea>
+        <ImageSubmit>
+          <p>공연을 나타내는 사진을 첨부해주세요.</p>
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+        </ImageSubmit>
       </InputForm>
-      <SubmitButton onClick={SubmitGoHome}>완료</SubmitButton>
+
+      <SubmitButton onClic k={SubmitGoHome}>
+        완료
+      </SubmitButton>
     </WriteContainer>
   );
 }
+
+const ImageSubmit = styled.div`
+  input {
+    display: block;
+  }
+  p {
+    margin-top: 30px;
+    text-align: left;
+    width: 275px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+`;
+
 const InputForm = styled.div`
   width: 352px;
-  height: 676px;
+  height: 870px;
   margin-top: 53px;
   border-radius: 20px;
   background-color: white;
@@ -270,7 +306,7 @@ const InputForm = styled.div`
 
 const WriteContainer = styled.div`
   width: 390px;
-  height: 975px;
+  height: 1179px;
   background: linear-gradient(
     206.48deg,
     rgba(167, 41, 227, 0.2) 9.21%,

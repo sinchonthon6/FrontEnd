@@ -11,7 +11,7 @@ const SearchPost = ({searchKeyword}) => {
 
   const [isSearchOn, setSearchOn] = useState(false);
   const [posts, setPosts] = useState([]);
-
+  
   const getResult = () => {
     if (searchKeyword) {
       axios
