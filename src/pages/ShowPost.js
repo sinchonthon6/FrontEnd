@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import en from 'date-fns/locale/en-US';
 import Post from '../components/ShowPost/Post';
 
+
 registerLocale('en', en); // 영어 설정 등록
 
 const ShowPost = () => {

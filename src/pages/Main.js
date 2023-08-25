@@ -7,15 +7,14 @@ import dance from "../images/dance.png";
 import etc from "../images/etc.png";
 import play from "../images/play.png";
 import sports from "../images/sports.png";
-import React from 'react';
-import styled from 'styled-components';
-import logo from '../images/UNIVERSITY CONCERT.svg';
-import search from '../images/Search.svg';
 
-const Main = ({showWrapper}) => {
+import logo from "../images/UNIVERSITY CONCERT.svg";
+import search from "../images/Search.svg";
+
+const Main = ({ showWrapper }) => {
   return (
     <Wrapper>
-          <SelectBox>
+      {/* <SelectBox>
         <SelectButton>전체</SelectButton>
         <SelectButton>서강대학교</SelectButton>
         <SelectButton>연세대학교</SelectButton>
@@ -69,14 +68,14 @@ const Main = ({showWrapper}) => {
             <span>기타</span>
           </div>
         </Category>
-      </DetailBox>
+      </DetailBox> */}
       <Background />
       <Header>
         <img src={logo}></img>
-        <div style={{marginTop: '12px'}}>
+        <div style={{ marginTop: "12px" }}>
           신촌 지역 대학교 동아리 공연을 한눈에 !
         </div>
-        <div style={{marginTop: '22px'}}>
+        <div style={{ marginTop: "22px" }}>
           <button>공연 등록하러 가기</button>
           <button>공연 구경하러 가기</button>
         </div>
@@ -84,7 +83,7 @@ const Main = ({showWrapper}) => {
       <Search>
         <span>보고 싶은 공연이 있나요?</span>
         <div>
-          <input placeholder='공연 이름 / 동아리 명' />
+          <input placeholder="공연 이름 / 동아리 명" />
           <img src={search} />
         </div>
       </Search>
