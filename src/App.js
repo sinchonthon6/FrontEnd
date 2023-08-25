@@ -4,9 +4,11 @@ import ShowPost from "./pages/ShowPost";
 import WritePost from "./pages/WritePost";
 import Login from "./pages/Login";
 import Nav from "./components/Nav";
+import GlobalStyles from "./styles";
 function App() {
   return (
     <>
+      <GlobalStyles />
       <Nav />
       <BrowserRouter>
         <Routes>
