@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
-import styled from 'styled-components';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import axios from "axios";
 
-import Slide from '../components/Main/Slide';
+import Slide from "../components/Main/Slide";
 
 //img
-import logo from '../images/UNIVERSITY CONCERT.svg';
-import search from '../images/Search.svg';
+import logo from "../images/UNIVERSITY CONCERT2.svg";
+import search from "../images/Search.svg";
 
-import {useAuth} from '../contexts/AuthContext';
+import { useAuth } from "../contexts/AuthContext";
 
 const Main = (props) => {
   const {
@@ -25,13 +25,13 @@ const Main = (props) => {
 
   const handleSearch = () => {
     if (searchKeyword) {
-      navigate('/search');
-      setSearchKeyword('');
+      navigate("/search");
+      setSearchKeyword("");
     }
   };
 
   //추천 행사
-  const {BASE_URL} = useAuth();
+  const { BASE_URL } = useAuth();
 
   useEffect(() => {
     getPosts();
@@ -46,7 +46,7 @@ const Main = (props) => {
         console.log(response.data.data);
       })
       .catch((error) => {
-        console.error('추천 행사들을 불러오는 중 오류가 발생했습니다.', error);
+        console.error("추천 행사들을 불러오는 중 오류가 발생했습니다.", error);
       });
   };
 
@@ -56,14 +56,14 @@ const Main = (props) => {
         <Background />
         <Header>
           <img src={logo}></img>
-          <div style={{marginTop: '12px'}}>
+          <div style={{ marginTop: "12px" }}>
             신촌 지역 대학교 동아리 공연을 한눈에 !
           </div>
-          <div style={{marginTop: '22px'}}>
-            <button onClick={() => navigate('/write')}>
+          <div style={{ marginTop: "22px" }}>
+            <button onClick={() => navigate("/write")}>
               공연 등록하러 가기
             </button>
-            <button onClick={() => navigate('/post')}>
+            <button onClick={() => navigate("/post")}>
               공연 구경하러 가기
             </button>
           </div>
@@ -72,7 +72,7 @@ const Main = (props) => {
           <span>보고 싶은 공연이 있나요?</span>
           <div>
             <input
-              placeholder='공연 이름 / 동아리 명'
+              placeholder="공연 이름 / 동아리 명"
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
             />
@@ -141,7 +141,10 @@ const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  img {
+    position: relative;
+    z-index: 999;
+  }
   div {
     display: flex;
     flex-direction: row;
